@@ -36,6 +36,7 @@
 *.exe
 *.out
 *.app
+sn2d
 
 # debug information files
 *.dwo
