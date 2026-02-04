@@ -22,12 +22,12 @@ void msg::startup(std::string casename){
 
 
     out_file << "SN2D: Discrete ordinates transport code\n\n";
-    out_file << "Version : "+ version +"\n";
+    out_file << "Version : v"+ version +"\n";
     out_file <<  "Author  : Kyle H. Hansen\n\n";
 
     std::cout << "\n";
     std::cout << "SN2D: Discrete ordinates transport code\n\n";
-    std::cout << "Version : "+ version +"\n";
+    std::cout << "Version : v"+ version +"\n";
     std::cout <<  "Author  : Kyle H. Hansen\n\n";
 
 

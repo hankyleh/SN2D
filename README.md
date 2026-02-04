@@ -19,5 +19,3 @@ TODO:
 
 - Command line input syntax will be changed in the future to include the input file extension (e.g. the file will be run with `sn2d filename.txt`) so that any input file extension except `.out` may be used.
 
-- Update versioning tags to say "v0.0.0"
-
