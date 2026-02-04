@@ -33,7 +33,7 @@ int main(int argc, char* argv[]){
     // Input check subroutine
 
     // Input echo subroutine
-    // io::echo(input_data);
+    io::echo(input_data);
 
     // Transport solver subroutine
         // Will solve D.O. here

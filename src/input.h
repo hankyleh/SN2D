@@ -23,6 +23,8 @@ namespace io{
 
     void echo(Parameters input_data);
 
+    std::string add_spaces(std::string msg, int len);
+
     void count_args(std::vector<std::string> row, int exp, int row_number);
 
     void err_msg(std::vector<std::string> row,int row_number);
