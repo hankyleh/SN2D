@@ -1,6 +1,18 @@
-SOURCES := src/main.cpp src/input.cpp src/parse.cpp src/transport.cpp src/msg.cpp src/echo.cpp
-HEADERS := src/version.h src/input.h src/parse.h src/transport.h src/msg.h src/echo.h
-CFLAGS = -O3
+CXX := g++
+SRC_DIR := src
+BUILD_DIR := build
+C_FLAGS := -O0 -std=c++17
 
-sn2d: $(SOURCES) $(HEADERS)
-	g++ $(SOURCES) -o ./sn2d -I./src $(CFLAGS) -std=c++17 -lstdc++fs
+SOURCES := input.cpp echo.cpp parse.cpp transport.cpp  msg.cpp main.cpp
+OBJECTS := $(SOURCES:.cpp=.o)
+BUILD_OBJECTS := $(addprefix $(BUILD_DIR)/, $(OBJECTS))
+
+sn2d: $(BUILD_OBJECTS)
+	$(CXX) $^ -o $@ $(C_FLAGS)
+
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
+	mkdir -p $(BUILD_DIR)
+	$(CXX) -c $< -o $@  -I./src $(C_FLAGS)
+
+clean:
+	rm -rf $(BUILD_DIR) sn2d

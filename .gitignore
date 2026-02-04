@@ -35,7 +35,10 @@
 # Executables
 *.exe
 *.app
-sn2d
 
 # debug information files
 *.dwo
+
+# build
+build/
+sn2d
