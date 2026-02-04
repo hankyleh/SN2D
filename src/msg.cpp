@@ -36,8 +36,11 @@ void msg::startup(std::string casename){
     std::stringstream datetime;
     datetime << std::put_time(std::localtime(&in_time_t), "%Y/%m/%d %X");
 
-    out_file <<  datetime.str()+"\n\n";
-    std::cout <<  datetime.str()+"\n\n";
+    out_file <<  datetime.str()+"\n";
+    std::cout <<  datetime.str()+"\n";
+
+    out_file << casename << "\n\n";
+    std::cout << casename << "\n\n";
 
     out_file.close();
 }

@@ -11,7 +11,7 @@
 #include <input.h>
 #include <msg.h>
 #include <parse.h>
-// #include <echo.h>
+#include <echo.h>
 #include <transport.h>
 
 
@@ -31,16 +31,16 @@ int main(int argc, char* argv[]){
     Parameters input_data = io::read(casename);
 
     // Input check subroutine
+    io::parse(input_data);
 
     // Input echo subroutine
     io::echo(input_data);
 
     // Transport solver subroutine
-        // Will solve D.O. here
+    // Will solve D.O. here
 
 
     // Calculate execution time and print in seconds
-
     auto end_time  = std::chrono::steady_clock::now();
     std::chrono::duration<double> duration = end_time - start_time;
 

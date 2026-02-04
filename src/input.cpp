@@ -4,7 +4,6 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include <cmath>
 
 #include <input.h>
 
@@ -56,8 +55,7 @@ Parameters io::read(std::string casename){
                 linevec.push_back(buffer);
             }
             params.push_back(linevec);
-        }
-        
+        } 
     }
 
     // Number of x, y computational cells
@@ -122,7 +120,6 @@ Parameters io::read(std::string casename){
     M = std::stoi(params[line_no][0]);
     
     // Macroscopic Cross Sections
-
     std::vector<double> sigma_tot, sigma_sca;
 
     for (int m=1; m<M+1; m++){
@@ -132,7 +129,6 @@ Parameters io::read(std::string casename){
         sigma_sca.push_back(std::stod(params[line_no][1]));
     }
 
-
     // Boundary conditions
     std::vector<int> bc_x, bc_y;
 
@@ -141,8 +137,8 @@ Parameters io::read(std::string casename){
     bc_x.push_back(std::stoi(params[line_no][0]));
     bc_x.push_back(std::stoi(params[line_no][1]));
 
-    bc_y.push_back(std::stoi(params[line_no][0]));
-    bc_y.push_back(std::stoi(params[line_no][1]));
+    bc_y.push_back(std::stoi(params[line_no][2]));
+    bc_y.push_back(std::stoi(params[line_no][3]));
 
     // Material and Source Assignment
     std::vector<std::vector<int>> mat_id;
@@ -198,68 +194,6 @@ Parameters io::read(std::string casename){
     return input_data;
 }
 
-void io::echo(Parameters input_data){
-    std::ofstream out_file(input_data.casename+".out", std::ios::app);
-    std::string buffer;
-
-    out_file << "---- Input data ----\n\n";
-
-    out_file << "Discrete Ordinates/Octant\n";
-    out_file << "n          mu          eta         w\n";
-    for (int n=0; n<input_data.K; n++){
-        buffer = "";
-        buffer = buffer + io::add_spaces(std::to_string(n+1), 11);
-        buffer = buffer + io::add_spaces(std::to_string(input_data.mu[n]), 11);
-        buffer = buffer + io::add_spaces(std::to_string(input_data.eta[n]), 11);
-        buffer = buffer + io::add_spaces(std::to_string(input_data.w[n]), 11);
-        out_file << buffer << std::endl;
-    }
-
-    out_file << "\n";
-
-    out_file << "Boundary Conditions\n";
-    out_file << "Left    Right   Bottom  Top \n";
-    buffer = "";
-    buffer = buffer + io::add_spaces(std::to_string(input_data.bc_x[0]), 8);
-    buffer = buffer + io::add_spaces(std::to_string(input_data.bc_x[1]), 8);
-    buffer = buffer + io::add_spaces(std::to_string(input_data.bc_y[0]), 8);
-    buffer = buffer + io::add_spaces(std::to_string(input_data.bc_y[1]), 8);
-    out_file << buffer << std::endl;
-    out_file << std::endl;
-
-    out_file << "Computational Cell data" << std::endl;
-    out_file << "i  j  Material  dx    dy    SigmaT    SigmaS    Source" << std::endl;
-
-    for (int i=0; i<input_data.I; i++){
-        for (int j=0; j<input_data.J; j++){
-            buffer = "";
-            buffer = buffer + io::add_spaces(std::to_string(i), 3);
-            buffer = buffer + io::add_spaces(std::to_string(j), 3);
-            buffer = buffer + io::add_spaces(std::to_string(input_data.mat_id[i][j]), 10);
-
-            std::ostringstream os;
-            os << input_data.h_x[i]+1;
-            buffer = buffer + io::add_spaces(os.str(), 6);
-            os << input_data.h_y[j]+1;
-            buffer = buffer + io::add_spaces(os.str(), 6);
-            buffer = buffer + io::add_spaces(std::to_string(input_data.sigma_tot[input_data.mat_id[i][j] - 1]), 10);
-            buffer = buffer + io::add_spaces(std::to_string(input_data.sigma_sca[input_data.mat_id[i][j] - 1]), 10);
-            buffer = buffer + std::to_string(input_data.source[i][j]);
-            out_file << buffer << std::endl;
-        }
-    }
-    out_file.close();
-}
-
-std::string io::add_spaces(std::string txt, int len){
-    std::string result = txt;
-    // TODO-- should round doubles that are too long
-    for (int i=0; i<(len - txt.length()); i++){
-        result = result + " ";
-    }
-    return result;
-}
-
 void io::count_args(std::vector<std::string> row, int exp, int row_number){
     if (row.size() != exp){
         std::string row_string;
@@ -270,7 +204,6 @@ void io::count_args(std::vector<std::string> row, int exp, int row_number){
                           " to be length "+std::to_string(exp)+
                           " (was "+std::to_string(row.size())+")"+
                           "\n\tRow contents:\n\t\t"+row_string;
-
         std::cout << msg << std::endl << std::endl;
         throw std::runtime_error("Invalid input file");
     }

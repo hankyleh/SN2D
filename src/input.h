@@ -1,4 +1,8 @@
+#ifndef INPUT_H
+#define INPUT_H
+
 #include <vector>
+#include <string>
 
 struct Parameters{
     std::string casename;
@@ -21,13 +25,10 @@ namespace io{
 
     Parameters read(std::string casename);
 
-    void echo(Parameters input_data);
-
-    std::string add_spaces(std::string msg, int len);
-
     void count_args(std::vector<std::string> row, int exp, int row_number);
 
     void err_msg(std::vector<std::string> row,int row_number);
 
 }
 
+#endif
