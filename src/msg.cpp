@@ -15,32 +15,26 @@ void msg::startup(std::string casename){
     // create output file
     std::string output_name;
     output_name = casename + ".out";
-
     std::ofstream out_file(output_name);
 
-
-
-
-    out_file << "SN2D: Discrete ordinates transport code\n\n";
-    out_file << "Version : v"+ version +"\n";
-    out_file <<  "Author  : Kyle H. Hansen\n\n";
-
     std::cout << "\n";
-    std::cout << "SN2D: Discrete ordinates transport code\n\n";
-    std::cout << "Version : v"+ version +"\n";
-    std::cout <<  "Author  : Kyle H. Hansen\n\n";
 
+    print_and_record(out_file, "SN2D: Discrete ordinates transport code\n\n");
+    print_and_record(out_file, "Version : v"+ version +"\n");
+    print_and_record(out_file, "Author  : Kyle H. Hansen\n\n");
 
     auto now = std::chrono::system_clock::now();
     auto in_time_t = std::chrono::system_clock::to_time_t(now);
     std::stringstream datetime;
     datetime << std::put_time(std::localtime(&in_time_t), "%Y/%m/%d %X");
 
-    out_file <<  datetime.str()+"\n";
-    std::cout <<  datetime.str()+"\n";
-
-    out_file << casename << "\n\n";
-    std::cout << casename << "\n\n";
+    print_and_record(out_file, datetime.str()+"\n");
+    print_and_record(out_file, casename+"\n\n");
 
     out_file.close();
+}
+
+void msg::print_and_record(std::ofstream& out_file, std::string msg){
+    std::cout << msg;
+    out_file << msg;
 }

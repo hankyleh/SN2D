@@ -219,3 +219,4 @@ void io::err_msg(std::vector<std::string> row, int row_number){
     std::cout << msg << std::endl << std::endl;
     throw std::runtime_error("Invalid input file");
 }
+
