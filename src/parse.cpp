@@ -46,10 +46,10 @@ void io::parse(Parameters input_data){
         }
         // xs must be non-negative reals, sig_s < sig_t
         for (int m=0; m<input_data.M; m++){
-            if (input_data.sigma_sca[m]<0 || input_data.sigma_tot[m]<0){
+            if (input_data.sig_sca_m[m]<0 || input_data.sig_tot_m[m]<0){
                 parse_err("Cross sections must be non-negative");
             }
-            if (input_data.sigma_sca[m] > input_data.sigma_tot[m]){
+            if (input_data.sig_sca_m[m] > input_data.sig_tot_m[m]){
                 parse_err("SigmaS must be < SigmaTot");
             }
         }

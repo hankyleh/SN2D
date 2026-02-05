@@ -120,7 +120,8 @@ Parameters io::read(std::string casename){
     M = std::stoi(params[line_no][0]);
     
     // Macroscopic Cross Sections
-    std::vector<double> sigma_tot, sigma_sca;
+    std::vector<double> sigma_tot, sigma_sca; // xs by material
+    std::vector<std::vector<double>> sig_t_func, sig_s_func; // xs by position
 
     for (int m=1; m<M+1; m++){
         line_no++;
@@ -128,6 +129,8 @@ Parameters io::read(std::string casename){
         sigma_tot.push_back(std::stod(params[line_no][0]));
         sigma_sca.push_back(std::stod(params[line_no][1]));
     }
+
+    
 
     // Boundary conditions
     std::vector<int> bc_x, bc_y;
@@ -148,19 +151,24 @@ Parameters io::read(std::string casename){
     for (int i=0; i<I; i++){
         mat_id.push_back({});
         source.push_back({});
+        sig_t_func.push_back({});
+        sig_s_func.push_back({});
+
         for (int j=0; j<J; j++){
             mat_id[i].push_back(0);
             source[i].push_back(0);
+            sig_t_func[i].push_back(0);
+            sig_s_func[i].push_back(0);
         }
     }
-
-    // TODO: should create a vector of all cross sections, sigma[i][j]
 
     line_no++;
     for (int j=J-1; j>-1; j--){
         count_args(params[line_no+j], I, line_no+1);
         for (int i=0; i<I; i++){
             mat_id[i][j] = std::stoi(params[line_no + j][i]);
+            sig_t_func[i][j] = sigma_tot[mat_id[i][j] - 1];
+            sig_s_func[i][j] = sigma_sca[mat_id[i][j] - 1];
         }
     }
 
@@ -171,6 +179,7 @@ Parameters io::read(std::string casename){
             source[i][j] = std::stod(params[line_no + j][i]);
         }
     }
+
 
     // add all data to struct and output
     Parameters input_data;
@@ -184,12 +193,15 @@ Parameters io::read(std::string casename){
     input_data.eta = eta;
     input_data.w = w;
     input_data.M = M;
-    input_data.sigma_tot = sigma_tot;
-    input_data.sigma_sca = sigma_sca;
+    input_data.sig_tot = sig_t_func;
+    input_data.sig_sca = sig_s_func;
+    input_data.sig_tot_m = sigma_tot;
+    input_data.sig_sca_m = sigma_sca;
     input_data.bc_x = bc_x;
     input_data.bc_y = bc_y;
     input_data.mat_id = mat_id;
     input_data.source = source;
+
 
     return input_data;
 }

@@ -49,8 +49,8 @@ void io::echo(Parameters input_data){
             os.str("");
             os << input_data.h_y[j];
             buffer = buffer + io::add_spaces(os.str(), 6);
-            buffer = buffer + io::add_spaces(std::to_string(input_data.sigma_tot[input_data.mat_id[i][j] - 1]), 10);
-            buffer = buffer + io::add_spaces(std::to_string(input_data.sigma_sca[input_data.mat_id[i][j] - 1]), 10);
+            buffer = buffer + io::add_spaces(std::to_string(input_data.sig_tot[i][j]), 10);
+            buffer = buffer + io::add_spaces(std::to_string(input_data.sig_sca[i][j]), 10);
             buffer = buffer + std::to_string(input_data.source[i][j]);
             out_file << buffer << std::endl;
         }
