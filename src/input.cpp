@@ -81,7 +81,7 @@ Parameters io::read(std::string casename){
         err_msg(params[line_no], line_no+1);
     }
 
-    while (h_y.size() < I){
+    while (h_y.size() < J){
         line_no++;
 
         for (std::string i : params[line_no]){
@@ -90,7 +90,7 @@ Parameters io::read(std::string casename){
     }
 
     // h_y vector should end with a new row
-    if (h_x.size() != I){
+    if (h_y.size() != J){
         err_msg(params[line_no], line_no+1);
     }
 
