@@ -1,12 +1,12 @@
-#include <string>
 #include <iostream>
+#include <string>
 
-#include <version.h>
 #include <start.h>
+#include <version.h>
 
-void start::startup(){
-    std::string version = std::to_string(version_major)+"."+
-                          std::to_string(version_minor)+"."+
-                          std::to_string(version_revision);
-    std::cout << "\nSN2D Version "<< version <<std::endl;
+void start::startup() {
+  std::string version = std::to_string(version_major) + "." +
+                        std::to_string(version_minor) + "." +
+                        std::to_string(version_revision);
+  std::cout << "\nSN2D Version " << version << std::endl;
 }

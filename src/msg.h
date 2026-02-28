@@ -1,11 +1,9 @@
 
 #include <string>
 
-namespace msg{
-    void startup(std::string casename);
+namespace msg {
+void startup(std::string casename);
 
-     void print_and_record(std::ofstream& out_file, std::string msg); 
-    
-}
+void print_and_record(std::ofstream &out_file, std::string msg);
 
-
+} // namespace msg
