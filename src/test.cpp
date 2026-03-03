@@ -73,7 +73,6 @@ int main(int argc, char *argv[]) {
     
   input_data d = read_input(input_file);
 
-
   transport::dd_out output =  transport::ddsolve(d.dx, d.dy, d.mu,
                                    d.eta, d.sigma, d.source,
                                    d.psi_in_j, d.psi_i_in);
