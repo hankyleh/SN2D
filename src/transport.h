@@ -1,6 +1,9 @@
 #ifndef TRANSPORT_H
 #define TRANSPORT_H
 
+#include <input.h>
+#include <vec.h>
+
 namespace transport {
 struct dd_out {
   double psi_out_j; // outgoing flux, x-direction
@@ -10,6 +13,8 @@ struct dd_out {
 
 dd_out ddsolve(double dx, double dy, double mu, double eta, double sigma,
                double source, double psi_in_j, double psi_i_in);
+vec2d sweep(Parameters params, vec2d source); //sweep given SCALAR ISOTROPIC SOURCE
+vec2d loop_mesh(Parameters params, vec2d angular_source);
 } // namespace transport
 
 #endif

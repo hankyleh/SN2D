@@ -1,10 +1,10 @@
 #include <chrono>
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <string>
 
 #include <filesystem>
-// #include <vector>
+#include <vector> // only for demo, TODO remove
 // #include <fstream>
 // #include <sstream>
 
@@ -42,5 +42,6 @@ int main(int argc, char *argv[]) {
 
   std::cout << "SN2D execution complete.\nExecution time: " << duration.count()
             << " seconds\n\n";
+
   return 0;
 }

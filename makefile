@@ -3,7 +3,7 @@ SRC_DIR := src
 BUILD_DIR := build
 C_FLAGS := -O0 -std=c++17
 
-SOURCES := input.cpp echo.cpp parse.cpp transport.cpp  msg.cpp main.cpp
+SOURCES := input.cpp echo.cpp parse.cpp transport.cpp  msg.cpp main.cpp vec.cpp
 OBJECTS := $(SOURCES:.cpp=.o)
 BUILD_OBJECTS := $(addprefix $(BUILD_DIR)/, $(OBJECTS))
 

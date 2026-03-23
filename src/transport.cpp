@@ -1,6 +1,8 @@
 #include <cmath>
 #include <transport.h>
 
+const double PI = 3.14159265358979323;
+
 transport::dd_out transport::ddsolve(double dx, double dy, double mu,
                                      double eta, double sigma, double source,
                                      double psi_in_j, double psi_i_in) {
@@ -39,3 +41,19 @@ transport::dd_out transport::ddsolve(double dx, double dy, double mu,
 
   return result;
 }
+
+vec2d transport::sweep(Parameters params, vec2d source){
+
+  vec2d scalar(params.I, params.J);
+  vec2d angular = scalar;
+
+  for (int k=0; k<params.K; k++){
+    // sweep northeast; mu>0 eta>0
+    // sweep southeast; mu>0 eta<0
+    // sweep southwest; mu<0 eta<0
+    // sweep northwest; mu<0 eta>0
+  }
+  return scalar;
+}
+
+vec2d transport::loop_mesh(Parameters params, vec2d angular_source)
