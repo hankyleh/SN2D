@@ -60,7 +60,7 @@ void io::parse(Parameters input_data) {
   for (int i = 0; i < 2; i++) {
     if ((input_data.bc_x[i] != 0 && input_data.bc_x[i] != 1) ||
         (input_data.bc_y[i] != 0 && input_data.bc_y[i] != 1)) {
-      parse_err("All Boundary Conditions must be 0 or 1");
+      parse_err("All Boundary Conditions must be 0 (vacuum) or 1 (reflective)");
     }
   }
 
@@ -69,7 +69,7 @@ void io::parse(Parameters input_data) {
     for (int j = 0; j < input_data.J; j++) {
       if (input_data.mat_id[i][j] > input_data.M ||
           input_data.mat_id[i][j] < 1) {
-        parse_err("All material IDs must be {1, ..., M}");
+        parse_err("All material assignments must be from given material IDs {1, ..., M}");
       }
     }
   }

@@ -70,3 +70,10 @@ std::string io::add_spaces(std::string txt, int len) {
   }
   return result;
 }
+
+void io::write_and_print(std::string msg, std::ostream& outfile){
+  // TODO : read print level flags(verbose, etc). Print all to output file,
+  // only print to cout based on print level of message.
+  std::cout << msg;
+  outfile << msg;
+}

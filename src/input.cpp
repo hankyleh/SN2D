@@ -7,40 +7,24 @@
 
 #include <input.h>
 
-Parameters io::read(std::string casename) {
+Parameters io::read(std::string input_name) {
 
   // Check for valid input file
 
   // permissible extensions
-  std::vector<std::string> extensions = {".txt", ".inp", ".in", ".i"};
+  // std::vector<std::string> extensions = {".txt", ".inp", ".in", ".i"};
 
-  int file_exists = 0;
+  std::filesystem::path input_path = input_name;
+
   std::string name;
-  std::string input_name;
+  std::string casename;
 
-  // TODO: program should be run with 'sn2d input.txt' instead of
-  // 'sn2d input'. First, identify and truncate extension
-
-  // check for file with each extension type
-  for (std::string ext : extensions) {
-    name = casename + ext;
-    if (std::filesystem::exists(name)) {
-      file_exists++;
-      input_name = name;
-    }
+  if (std::filesystem::exists(input_path)) {
+    casename = input_path.stem();
+  } else {
+    throw std::runtime_error("Cannot find input file at"+std::filesystem::absolute(input_path).u8string());
   }
 
-  if (file_exists == 0) {
-    std::cout << "Input file must have txt, inp, in, or i extension!"
-              << std::endl
-              << std::endl;
-    throw std::runtime_error("Invalid input file!");
-  }
-  if (file_exists > 1) {
-    std::cout << "Input files must have a unique name" << std::endl
-              << std::endl;
-    throw std::runtime_error("Invalid input file!");
-  }
 
   // transcribe contents of input file to 2d vector of strings
   std::vector<std::vector<std::string>> params;

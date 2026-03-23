@@ -1,8 +1,9 @@
 #include <chrono>
 #include <iostream>
+#include <fstream>
 #include <string>
 
-// #include <filesystem>
+#include <filesystem>
 // #include <vector>
 // #include <fstream>
 // #include <sstream>
@@ -17,13 +18,14 @@ int main(int argc, char *argv[]) {
   // check that input file exists
 
   auto start_time = std::chrono::steady_clock::now();
-  std::string casename = std::string(argv[1]);
+  std::filesystem::path input_path = argv[1];
+  std::string casename = input_path.stem().u8string();
 
   // version data subroutine
   msg::startup(casename);
 
   // input data subroutine
-  Parameters input_data = io::read(casename);
+  Parameters input_data = io::read(input_path.u8string());
 
   // Input check subroutine
   io::parse(input_data);
@@ -40,6 +42,5 @@ int main(int argc, char *argv[]) {
 
   std::cout << "SN2D execution complete.\nExecution time: " << duration.count()
             << " seconds\n\n";
-
   return 0;
 }
