@@ -1,7 +1,7 @@
 CXX := g++
 SRC_DIR := src
 BUILD_DIR := build
-C_FLAGS := -O0 -std=c++17
+C_FLAGS := -O3 -std=c++17 -lstdc++fs
 
 SOURCES := input.cpp echo.cpp parse.cpp transport.cpp  msg.cpp main.cpp vec.cpp
 OBJECTS := $(SOURCES:.cpp=.o)
