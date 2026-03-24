@@ -13,7 +13,9 @@ sn2d: $(BUILD_OBJECTS)
 ddsolve:
 	mkdir -p $(BUILD_DIR)
 	$(CXX) -c $(SRC_DIR)/transport.cpp -o $(BUILD_DIR)/transport.o -I./src $(C_FLAGS)
-	$(CXX)  $(SRC_DIR)/test.cpp $(BUILD_DIR)/transport.o -o test -I./src $(C_FLAGS)
+	$(CXX) -c $(SRC_DIR)/msg.cpp -o $(BUILD_DIR)/msg.o -I./src $(C_FLAGS)
+	$(CXX) -c $(SRC_DIR)/vec.cpp -o $(BUILD_DIR)/vec.o -I./src $(C_FLAGS)
+	$(CXX)  $(SRC_DIR)/test.cpp $(BUILD_DIR)/transport.o $(BUILD_DIR)/msg.o $(BUILD_DIR)/vec.o -o test -I./src $(C_FLAGS)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	mkdir -p $(BUILD_DIR)

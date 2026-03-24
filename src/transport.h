@@ -13,8 +13,9 @@ struct dd_out {
 
 dd_out ddsolve(double dx, double dy, double mu, double eta, double sigma,
                double source, double psi_in_j, double psi_i_in);
-vec2d sweep(Parameters params, vec2d source); //sweep given SCALAR ISOTROPIC SOURCE
-vec2d loop_mesh(Parameters params, vec2d angular_source);
+vec2d sweep(Parameters params, vec2d source); // sweep given ANGULAR SOURCE
+vec2d loop_mesh(double mu, double eta, const Parameters params,
+                vec2d angular_source);
 } // namespace transport
 
 #endif

@@ -1,5 +1,8 @@
 #include <cmath>
+#include <msg.h>
 #include <transport.h>
+
+#include <iostream> // for debugging only
 
 const double PI = 3.14159265358979323;
 
@@ -42,18 +45,83 @@ transport::dd_out transport::ddsolve(double dx, double dy, double mu,
   return result;
 }
 
-vec2d transport::sweep(Parameters params, vec2d source){
+vec2d transport::sweep(Parameters params, vec2d source) {
 
   vec2d scalar(params.I, params.J);
   vec2d angular = scalar;
 
-  for (int k=0; k<params.K; k++){
+  vec2d angular_source = source; // TODO check if angular or scalar source
+
+  for (int k = 0; k < params.K; k++) {
+    double mu = params.mu[k];
+    double eta = params.eta[k];
+
     // sweep northeast; mu>0 eta>0
+    angular = loop_mesh(mu, eta, params, angular_source);
+    scalar += (angular * 2 * params.w[k]);
     // sweep southeast; mu>0 eta<0
+    angular = loop_mesh(mu, -eta, params, angular_source);
+    scalar += (angular * 2 * params.w[k]);
     // sweep southwest; mu<0 eta<0
+    angular = loop_mesh(-mu, -eta, params, angular_source);
+    scalar += (angular * 2 * params.w[k]);
     // sweep northwest; mu<0 eta>0
+    angular = loop_mesh(-mu, eta, params, angular_source);
+    scalar += (angular * 2 * params.w[k]);
   }
   return scalar;
 }
 
-vec2d transport::loop_mesh(Parameters params, vec2d angular_source)
+vec2d transport::loop_mesh(double mu, double eta, const Parameters params,
+                           vec2d angular_source) {
+  vec2d flux(params.I, params.J);
+
+  double dx, dy, sigma, source, psi_i_in, psi_in_j;
+  std::vector<double> psi_i_in_vec;
+
+  int x_start = 0 + (params.I - 1) * (mu < 0);
+  int y_start = 0 + (params.J - 1) * (eta < 0);
+  int x_step = 1 - 2 * (mu < 0);
+  int y_step = 1 - 2 * (eta < 0);
+  int x_end = (params.I) - (params.I + 1) * (mu < 0);
+  int y_end = (params.J) - (params.J + 1) * (eta < 0);
+
+  transport::dd_out kernel_result;
+
+  switch (params.bc_x[1 * (mu < 0)]) {
+  case 0:
+    // vacuum boundary
+    psi_in_j = 0;
+    break;
+  case 1:
+    // reflective boundary
+    throw std::runtime_error("Reflective x BC not yet supported in loop_mesh");
+  }
+  switch (params.bc_y[1 * (eta < 0)]) {
+  case 0:
+    // vacuum boundary
+    psi_i_in_vec = std::vector(params.I, 0.0);
+    break;
+  case 1:
+    // reflective boundary
+    throw std::runtime_error("Reflective y BC not yet supported in loop_mesh");
+  }
+
+  for (int j = y_start; j != y_end; j += y_step) {
+    psi_in_j = 0; // TODO will need to change when refl bc is added
+    for (int i = x_start; i != x_end; i += x_step) {
+      dx = params.h_x[i];
+      dy = params.h_y[j];
+      sigma = params.sig_tot[i][j];
+      source = angular_source(i, j);
+      psi_i_in = psi_i_in_vec[i];
+      kernel_result =
+          ddsolve(dx, dy, mu, eta, sigma, source, psi_in_j, psi_i_in);
+      psi_in_j = kernel_result.psi_out_j;
+      psi_i_in_vec[i] = kernel_result.psi_i_out;
+      flux(i, j) = kernel_result.psi_i_j;
+    }
+  }
+
+  return flux;
+}

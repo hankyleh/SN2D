@@ -2,7 +2,7 @@
 #define INPUT_H
 
 const int version_major = 0;
-const int version_minor = 1;
-const int version_revision = 3;
+const int version_minor = 2;
+const int version_revision = 0;
 
 #endif

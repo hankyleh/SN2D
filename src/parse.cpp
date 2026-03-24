@@ -69,7 +69,8 @@ void io::parse(Parameters input_data) {
     for (int j = 0; j < input_data.J; j++) {
       if (input_data.mat_id[i][j] > input_data.M ||
           input_data.mat_id[i][j] < 1) {
-        parse_err("All material assignments must be from given material IDs {1, ..., M}");
+        parse_err("All material assignments must be from given material IDs "
+                  "{1, ..., M}");
       }
     }
   }

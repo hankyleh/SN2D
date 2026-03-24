@@ -1,16 +1,14 @@
-#include <vec.h>
-#include <vector>
 #include <algorithm>
 #include <cmath>
+#include <vec.h>
+#include <vector>
 
 #include <iostream>
 
 int vec2d::get_I() { return I; }
 int vec2d::get_J() { return J; }
 
-double& vec2d::operator()(int i, int j){
-  return data[i*J + j];
-}
+double &vec2d::operator()(int i, int j) { return data[i * J + j]; }
 
 int vec2d::get_size() { return size; }
 
@@ -50,7 +48,7 @@ void vec2d::print_all() {
   }
 }
 
-void vec2d::operator =(vec2d vec){
+void vec2d::operator=(vec2d vec) {
   I = vec.I;
   J = vec.J;
   size = vec.size;
@@ -131,22 +129,22 @@ void vec2d::zero() {
   }
 }
 
-double vec2d::linf_norm(){
-    return *std::max_element(data.begin(), data.end());
+double vec2d::linf_norm() {
+  return *std::max_element(data.begin(), data.end());
 }
 
-double vec2d::l2_norm(){
-    double result = 0;
-    for (int s=0; s<size; s++){
-        result += std::pow(data[s], 2);
-    }
-    return std::pow(result, 0.5);
+double vec2d::l2_norm() {
+  double result = 0;
+  for (int s = 0; s < size; s++) {
+    result += std::pow(data[s], 2);
+  }
+  return std::pow(result, 0.5);
 }
 
-double vec2d::l1_norm(){
-    double result = 0;
-    for (int s=0; s<size; s++){
-        result += std::abs(data[s]);
-    }
-    return result;
+double vec2d::l1_norm() {
+  double result = 0;
+  for (int s = 0; s < size; s++) {
+    result += std::abs(data[s]);
+  }
+  return result;
 }

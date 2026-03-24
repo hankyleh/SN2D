@@ -1,11 +1,11 @@
 #include <transport.h>
 
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
-#include <filesystem>
 
 struct input_data {
   double dx;
@@ -38,8 +38,8 @@ input_data read_input(std::string input_name) {
   }
   input_file.close();
 
-  if (input_strings.size() != 8){
-    throw std::runtime_error("Wrong number of inputs in "+input_name);
+  if (input_strings.size() != 8) {
+    throw std::runtime_error("Wrong number of inputs in " + input_name);
   }
 
   result.dx = std::stod(input_strings[0]);
@@ -54,31 +54,29 @@ input_data read_input(std::string input_name) {
 }
 
 void print_output(std::string output_name, transport::dd_out data) {
-    std::ofstream outfile(output_name);
+  std::ofstream outfile(output_name);
 
-    outfile << "Cell-centered flux: ";
-    outfile << data.psi_i_j << std::endl;
-    outfile << "Flux, out, j: ";
-    outfile << data.psi_out_j << std::endl;
-    outfile << "Flux, i, out: ";
-    outfile << data.psi_i_out;
+  outfile << "Cell-centered flux: ";
+  outfile << data.psi_i_j << std::endl;
+  outfile << "Flux, out, j: ";
+  outfile << data.psi_out_j << std::endl;
+  outfile << "Flux, i, out: ";
+  outfile << data.psi_i_out;
 
-    outfile.close();
+  outfile.close();
 }
 
 int main(int argc, char *argv[]) {
-    std::filesystem::path input_path(argv[1]);
-    std::string input_file = input_path.string();
-    std::string output_file = input_path.replace_extension(".out").string();
-    
+  std::filesystem::path input_path(argv[1]);
+  std::string input_file = input_path.string();
+  std::string output_file = input_path.replace_extension(".out").string();
+
   input_data d = read_input(input_file);
 
-  transport::dd_out output =  transport::ddsolve(d.dx, d.dy, d.mu,
-                                   d.eta, d.sigma, d.source,
-                                   d.psi_in_j, d.psi_i_in);
+  transport::dd_out output = transport::ddsolve(
+      d.dx, d.dy, d.mu, d.eta, d.sigma, d.source, d.psi_in_j, d.psi_i_in);
 
-     print_output(output_file, output);
-
+  print_output(output_file, output);
 
   return 0;
 }

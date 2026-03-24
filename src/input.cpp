@@ -22,9 +22,9 @@ Parameters io::read(std::string input_name) {
   if (std::filesystem::exists(input_path)) {
     casename = input_path.stem();
   } else {
-    throw std::runtime_error("Cannot find input file at"+std::filesystem::absolute(input_path).u8string());
+    throw std::runtime_error("Cannot find input file at" +
+                             std::filesystem::absolute(input_path).u8string());
   }
-
 
   // transcribe contents of input file to 2d vector of strings
   std::vector<std::vector<std::string>> params;
