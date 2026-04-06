@@ -45,6 +45,8 @@ total_1 scatter_1    # Cross sections [M rows of 2 floats]
 0.0 1.0 1.0 1.0 0.0
 0.0 1.0 1.0 1.0 0.0
 0.0 0.0 0.0 0.0 0.0
+
+1e-3  50             # convergence tolerance and max. iterations
 ```
 #### Single-cell Diamond Difference test (`test`)
 ```
