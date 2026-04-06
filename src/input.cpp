@@ -162,6 +162,10 @@ Parameters io::read(std::string input_name) {
     }
   }
 
+  line_no += J;
+  double epsilon = std::stod(params[line_no][0]);
+  int max_iter = std::stoi(params[line_no][1]);
+
   // add all data to struct and output
   Parameters input_data;
   input_data.casename = casename;
@@ -182,6 +186,8 @@ Parameters io::read(std::string input_name) {
   input_data.bc_y = bc_y;
   input_data.mat_id = mat_id;
   input_data.source = source;
+  input_data.epsilon = epsilon;
+  input_data.max_iterations = max_iter;
 
   return input_data;
 }

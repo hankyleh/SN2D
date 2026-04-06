@@ -4,6 +4,8 @@
 #include <input.h>
 #include <vec.h>
 
+#include <filesystem>
+
 namespace transport {
 struct dd_out {
   double psi_out_j; // outgoing flux, x-direction
@@ -16,6 +18,7 @@ dd_out ddsolve(double dx, double dy, double mu, double eta, double sigma,
 vec2d sweep(Parameters params, vec2d source); // sweep given ANGULAR SOURCE
 vec2d loop_mesh(double mu, double eta, const Parameters params,
                 vec2d angular_source);
+vec2d inner(Parameters params, std::filesystem::path output_path);
 } // namespace transport
 
 #endif

@@ -7,15 +7,10 @@
 #include <msg.h>
 #include <version.h>
 
-void msg::startup(std::string casename) {
+void msg::startup(std::string casename, std::ofstream &out_file) {
   std::string version = std::to_string(version_major) + "." +
                         std::to_string(version_minor) + "." +
                         std::to_string(version_revision);
-
-  // create output file
-  std::string output_name;
-  output_name = casename + ".out";
-  std::ofstream out_file(output_name);
 
   // std::cout << "\n";
   print_and_record("\n***************************************\n\n", out_file);
@@ -74,3 +69,10 @@ void msg::print_and_record(std::string msg, std::ofstream &out_file) {
 }
 
 void msg::record(std::string msg, std::ofstream &out_file) { out_file << msg; }
+
+std::string msg::sci_fmt(double value, int decimal){
+  char result [decimal + 10];
+  std::string prompt = "%."+std::to_string(decimal)+"e";
+  int cx = sprintf(result, prompt.c_str(), value);
+  return result;
+}

@@ -4,13 +4,16 @@
 #include <cmath>
 #include <iostream>
 #include <string>
+#include <iostream>
 
 void io::parse(Parameters input_data) {
   // I, J
   // must be positive integers
+  
   if (input_data.I <= 0 || input_data.J <= 0) {
     parse_err("I and J must be positive integers");
   }
+  
 
   // Cell widths
   // must be positive real numbers
@@ -79,7 +82,7 @@ void io::parse(Parameters input_data) {
   // non-negative real
   for (int i = 0; i < input_data.I; i++) {
     for (int j = 0; j < input_data.J; j++) {
-      if (input_data.source[i][j] < 0) {
+      if (input_data.source(i, j) < 0) {
         parse_err("Source must be non-negative");
       }
     }

@@ -49,9 +49,9 @@ void io::echo(Parameters input_data, std::ofstream &out_file) {
       os.str("");
       os << input_data.h_y[j];
       buffer = buffer + msg::add_spaces(os.str(), 6);
-      buffer = buffer + msg::add_spaces(input_data.sig_tot[i][j], 10);
-      buffer = buffer + msg::add_spaces(input_data.sig_sca[i][j], 10);
-      buffer = buffer + std::to_string(input_data.source[i][j]);
+      buffer = buffer + msg::add_spaces(input_data.sig_tot(i,j), 10);
+      buffer = buffer + msg::add_spaces(input_data.sig_sca(i,j), 10);
+      buffer = buffer + std::to_string(input_data.source(i,j));
       out_file << buffer << std::endl;
     }
   }
