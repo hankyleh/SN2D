@@ -146,7 +146,7 @@ vec2d transport::inner(Parameters params, std::filesystem::path output_path) {
   std::ofstream outstream;
   for (n = 0; n < params.max_iterations; n++) { // performs single iteration
     // compute scattering source
-    distributed_source = params.source + (params.sig_sca * old_scalar * 0.5);
+    distributed_source = params.source + (params.sig_sca * old_scalar);
 
     // perform iteration
     scalar = sweep(params, distributed_source);
